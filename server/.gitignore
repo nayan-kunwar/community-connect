@@ -1,0 +1,7 @@
+# Sensitive Files (Never commit these!)
+.env
+NOTES*.md
+
+# Build/Dependency Directories
+dist/
+node_modules/
