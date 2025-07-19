@@ -6,7 +6,7 @@ import logger from './utils/logger.js';
 connectToMongoDB()
     .then(() => {
         app.listen(config.PORT, () => {
-            logger.info(`Server is running on http://localhost:${config.PORT}`);
+            console.log(`Server is running on http://localhost:${config.PORT}`);
         });
     })
     .catch((error) => {

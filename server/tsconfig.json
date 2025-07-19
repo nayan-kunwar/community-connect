@@ -5,6 +5,11 @@
     "rootDir": "src",
     "outDir": "dist",
     "moduleResolution": "nodenext",
-    "strict": true
+    "strict": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
+    "types": []  
   }
 }
