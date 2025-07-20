@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { authApi } from '../../lib/api/authApi';
 import { AuthCredentials, AuthResponse } from '@/types/authTypes';
+import { AxiosError } from 'axios';
 
 export const loginUser = createAsyncThunk<AuthResponse, AuthCredentials>(
     'auth/login',
@@ -9,8 +10,13 @@ export const loginUser = createAsyncThunk<AuthResponse, AuthCredentials>(
             const response = await authApi.login(credentials); // returns AuthResponse
             console.log('Login response thunk:', response);
             return response;
-        } catch (error: any) {
-            return rejectWithValue(error.response?.data?.message || 'Login failed');
+        } catch (error) {
+            const axiosError = error as AxiosError<{ message?: string }>;
+            return rejectWithValue(
+                axiosError.response?.data?.message || 
+                axiosError.message || 
+                'Login failed'
+            );
         }
     }
 );

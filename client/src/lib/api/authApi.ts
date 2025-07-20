@@ -1,5 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { AuthCredentials, AuthResponse } from '../../types/authTypes';
+
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -12,9 +13,14 @@ export const authApi = {
             });
             console.log('Login response:', response.data);
             return response.data;
-        } catch (error: any) {
-            console.error('Login API Error:', error?.response?.data || error.message);
-            throw error; // rethrow to let createAsyncThunk catch it
+        } catch (error) {
+            const axiosError = error as AxiosError<{ message?: string }>;
+            console.error(
+                'Login API Error:',
+                axiosError.response?.data?.message ||
+                axiosError.message
+            );
+            throw axiosError;
         }
     },
 

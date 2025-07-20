@@ -22,10 +22,13 @@ const SignInPage = () => {
         // Login was successful
         console.log('Login success:', resultAction); // {success: true, user: {}}
         router.push('/dashboard');
-      } catch (error: any) {
+      } catch (error) {
         // Login failed
         console.error('Login failed:', error);
-        alert(error); // You can show a nicer toast/snackbar instead
+        alert(
+          typeof error === 'string' ? error :
+            'An unexpected error occurred'
+        );
       }
     }
   };
