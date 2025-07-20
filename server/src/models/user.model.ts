@@ -32,7 +32,7 @@ UserSchema.methods.comparePassword = async function (candidatePassword: string):
 // Method to generate Access token
 UserSchema.methods.generateAccessToken = function (): string {
     return generateToken(
-        { id: this._id, username: this.username, email: this.email },
+        { _id: this._id, username: this.username, email: this.email },
         config.ACCESS_TOKEN_SECRET,
         'access'
     );

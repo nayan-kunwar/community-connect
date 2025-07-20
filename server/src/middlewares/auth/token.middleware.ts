@@ -8,7 +8,6 @@ export const verifyToken: RequestHandler = async (req, res, next) => {
     const token =
         req.cookies?.access_token ||
         req.header("Authorization")?.replace("Bearer ", "");
-
     if (!token) {
         res.status(401).json({ message: "Access token is required" });
         return;
@@ -17,7 +16,6 @@ export const verifyToken: RequestHandler = async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, config.ACCESS_TOKEN_SECRET);
         const user = await User.findById((decoded as JwtPayload)._id).select("-password -refreshToken");
-
         if (!user) {
             res.status(401).json({ message: "Invalid access token" });
             return;
