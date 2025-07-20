@@ -6,15 +6,25 @@ import httpLogger from './middlewares/httpLogger.js';
 const app = express();
 
 
-app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Specify allowed HTTP methods
-  credentials: true, // if you're using cookies or headers
-}));
-// app.options('*', cors({
-//   origin: ['http://localhost:3000', 'http://localhost:3001'],
-//   credentials: true,
-// }));
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "development"
+        ? [
+          "http://localhost:3000",
+          "http://localhost:3002",
+          "http://localhost:3001",
+        ]
+        : [
+          "https://community-connect-frontend.vercel.app",
+
+        ],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Specify allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
